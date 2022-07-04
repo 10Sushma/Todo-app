@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+import {useEffect,useState} from 'react';
 import './App.css';
+import axios from 'axios'
 
 function App() {
+  const[item, setItem]=useState([])
+  
+  useEffect(()=>{
+    // const res=axios.get('https://jsonplaceholder.typicode.com/todos/')
+    // console.log(res)
+    // const Data=res.data
+    fetch('https://jsonplaceholder.typicode.com/todos/')
+    .then(res=>res.json())
+    .then(result=>{
+      setItem(result)
+    })
+    
+    
+
+  },[]);
+  console.log(item)
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+      {item.map((newItem,i)=>(
+      //  <p>{newItem.id}</p>
+        <tr key={i}>
+
+          <td>{newItem.title}</td>
+          <td>{newItem.completed? 'True':'False'}</td>
+        </tr>
+       
+      ))}
+     </table>
     </div>
   );
 }
